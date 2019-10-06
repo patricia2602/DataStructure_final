@@ -28,8 +28,7 @@ using uiuc::HSLAPixel;
  * @return The grayscale image.
  */
 PNG grayscale(PNG image) {
-  /// This function is already written for you so you can see how to
-  /// interact with our PNG class.
+
   for (unsigned x = 0; x < image.width(); x++) {
     for (unsigned y = 0; y < image.height(); y++) {
       HSLAPixel & pixel = image.getPixel(x, y);
@@ -70,10 +69,14 @@ PNG createSpotlight(PNG image, int centerX, int centerY) {
   
   for (unsigned x = 0; x < image.width(); x++) {
     for (unsigned y = 0; y < image.height(); y++) {
+
       HSLAPixel & pixel = image.getPixel(x, y);
+      
+      //calculate the distance from current pixel to the center
       int dist_x = labs(x - centerX);
       int dist_y = labs(y - centerY);
       double dist = sqrt(pow(dist_x,2) + pow(dist_y,2));
+
       if (dist > 160){
 	pixel.l = pixel.l * 0.2;
       }
@@ -101,18 +104,21 @@ PNG illinify(PNG image) {
 
   for (unsigned x = 0; x < image.width(); x++) {
     for (unsigned y = 0; y < image.height(); y++) {
+      
       HSLAPixel & pixel = image.getPixel(x, y);
+      
       unsigned dist_11 = 0;
       unsigned dist_216 = 0;
-      if(pixel.h>11 && pixel.h<216){
+      
+      if(pixel.h>11 && pixel.h<216){ //h between 11 and 216
          dist_11 = pixel.h - 11;
 	 dist_216 = 216 - pixel.h;
       }
-      else if(pixel.h>=216){
+      else if(pixel.h>=216){ //h wraps around after 360 so we use 360+11=371
 	dist_11 = 371 - pixel.h;
 	dist_216 = pixel.h - 216;
       }
-      else if(pixel.h >= 0 && pixel.h <= 11){
+      else if(pixel.h >= 0 && pixel.h <= 11){  //last section (0~11) should also be covered
          pixel.h = 11;
       }
       
@@ -142,6 +148,7 @@ PNG illinify(PNG image) {
 */
 PNG watermark(PNG firstImage, PNG secondImage) {
 
+  // only care about the overlapped area
   unsigned x1 = firstImage.width();
   unsigned x2 = secondImage.width();
   unsigned y1 = firstImage.height();
