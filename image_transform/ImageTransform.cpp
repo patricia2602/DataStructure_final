@@ -114,5 +114,21 @@ PNG illinify(PNG image) {
 */
 PNG watermark(PNG firstImage, PNG secondImage) {
 
+  unsigned x1 = firstImage.width();
+  unsigned x2 = secondImage.width();
+  unsigned y1 = firstImage.height();
+  unsigned y2 = secondImage.height();
+  unsigned width_out = std::min(x1, x2);
+  unsigned height_out = std::min(y1, y2);
+
+  for(unsigned x = 0; x < width_out; x++){
+    for(unsigned y = 0; y < height_out; y++){
+	HSLAPixel & pixel1 = firstImage.getPixel(x, y);
+	HSLAPixel & pixel2 = secondImage.getPixel(x,y);
+	if(pixel2.l == 1){
+	  pixel1.l = pixel1.l + 0.2;
+	}
+    }
+  }
   return firstImage;
 }
