@@ -100,11 +100,25 @@ PNG illinify(PNG image) {
   for (unsigned x = 0; x < image.width(); x++) {
     for (unsigned y = 0; y < image.height(); y++) {
       HSLAPixel & pixel = image.getPixel(x, y);
-      if(pixel.h>113.5 || pixel.h<293.5){
-         pixel.h = 216;
+      double dist_11 = 0.0;
+      double dist_216 = 0.0;
+      if(pixel.h>11 || pixel.h<216){
+         dist_11 = pixel.h - 11;
+	 dist_216 = 216 - pixel.h;
+      }
+      else if(pixel.h>216){
+	dist_11 = 371 - pixel.h;
+	dist_216 = pixel.h - 216;
       }
       else{
          pixel.h = 11;
+      }
+      
+      if(dist_11<dist_216){
+        pixel.h = 11;
+      }
+      else{
+	pixel.h = 216;
       }
     }
   }
