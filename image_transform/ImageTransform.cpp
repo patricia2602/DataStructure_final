@@ -7,14 +7,12 @@
 #include "ImageTransform.h"
 
 /* ******************
-(Begin multi-line comment...)
 
 Write your name and email address in the comment space here:
 
-Name:
-Email:
+Name: Patricia Sung
+Email: patriciasung2020@u.northwestern.edu
 
-(...end multi-line comment.)
 ******************** */
 
 using uiuc::PNG;
